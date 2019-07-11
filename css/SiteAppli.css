@@ -1,0 +1,38 @@
+#background{
+	position: fixed;
+	z-index: 0;
+	width:100%;
+	height:100%;
+	opacity: 0.8;
+	left:0%;
+	top:0%;
+	display: block;
+	align-items: center;
+}
+body {
+	padding-top: 10px;
+}
+.cacher {
+	color: #007bff;
+}
+
+img:hover {
+	text-decoration: none;
+}
+
+.deco {
+	float: right;
+}
+
+.imgdeco {
+	display: inline-block;
+	height: 38px;
+}
+
+.td {
+	overflow: auto;
+}
+
+#ech {
+	color: red;
+}
