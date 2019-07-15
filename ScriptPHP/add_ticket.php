@@ -1,9 +1,11 @@
-<?php include('./ScriptPHP/verif.php'); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <body>
 <?php
-
+session_start();
+if (!isset($_SESSION['login'])) {
+	header('Location: ../index.php');
+}
 $sql = "INSERT INTO Client (CLI_NOM, CLI_PRENOM) VALUES (?, ?)
 		INSERT INTO Ticket (TCK_TITRE, TCK_DESC) VALUES (?, ?)";
           $stmt= $dbs->prepare($sql);

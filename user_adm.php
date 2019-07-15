@@ -6,12 +6,13 @@ include('co.php');
 
 /* Vérification que l'argument existe */
 $trouve=false;
-$res = $link->query("select * from Client");
+$res = $link->query("select * from Utilisateur where USER_ID == ".$_SESSION['id']);
 
-if (isset($_GET['client'])) {
-  foreach ($res as $client) {
-    if ($client['CLI_ID']==$_GET['client']) {
-      $nomcli=$client['CLI_NOM'];
+if (isset($_SESSION['id'])) {
+  foreach ($res as $user) {
+    if ($user['USER_ROLE']==0) {
+      $usr=$user['USER_LOGIN'];
+      echo $usr."<br>";
       $trouve=true;
     }
   }
@@ -20,14 +21,13 @@ if (isset($_GET['client'])) {
 <html lang="fr">
 <head>
   <?php include('head.php'); ?>
-	<title>EFREIPORT Web | Fiche client </title>
+	<title>EFREIPORT Web | Utilisateurs </title>
   </head>
 <body class="container" align="center">
-	<h1>EFREIPORT | Fiche du client <?php if ($trouve==true) { echo $nomcli; }?></h1>
+	<h1>EFREIPORT | Gestion des utilisateurs</h1>
   <br>
+  <?php echo $_SESSION['id'];?>
   <a class="btn btn-primary" href="accueil.php" role="button">Retour à l'accueil</a>
-  <button class="btn btn-secondary" onClick="checkAll('cases[]', true);">Sélectionner tout</button>
-  <button class="btn btn-secondary" onClick="checkNorris('cases[]', true);">Ne rien sélectionner</button>
   <br><br>
   <?php
 
@@ -105,29 +105,5 @@ if (isset($_GET['client'])) {
 </body>
 </html>
 <script type="text/javascript">
-window.onload = checkNorris('cases[]', 'true');
-
-function checkAll(name, checked){
-  //On parcourt tous les inputs de la page
-  var inputs = document.getElementsByTagName('input');
-  for(var i=0; i<inputs.length; i++){
-    //On regarde s'il s'agit d'une checkbox avec le nom souhaité
-    if(inputs[i].type == 'checkbox' && inputs[i].name == 'todelete[]'){
-      //On attribue à la case le même état (coché/décoché) que celui de la checkbox servant à tout cocher/décocher
-      inputs[i].checked = checked;
-    }
-  }
-}
-function checkNorris(name, checked){
-  //On parcourt tous les inputs de la page
-  var inputs = document.getElementsByTagName('input');
-  for(var i=0; i<inputs.length; i++){
-    //On regarde s'il s'agit d'une checkbox avec le nom souhaité
-    if(inputs[i].type == 'checkbox' && inputs[i].name == 'todelete[]'){
-      //On attribue à la case le même état (coché/décoché) que celui de la checkbox servant à tout cocher/décocher
-      inputs[i].checked = !checked;
-    }
-  }
-}
 function DoNav(theUrl) { document.location.href = theUrl; }
 </script>

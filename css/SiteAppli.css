@@ -36,3 +36,10 @@ img:hover {
 #ech {
 	color: red;
 }
+#scen td:hover{
+   cursor: pointer;
+}
+
+#sup, #scen td:last-child {
+	text-align: center;
+}
