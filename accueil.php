@@ -10,12 +10,7 @@
 		<br>Interface Admin	<a href="ScriptPHP/logout.php" class="deco"><img class="imgdeco" src="img/button.png" title="Déconnexion" alt="Déconnexion"></a>
 	</h1>
 	<br>
-	<a class="btn btn-primary" href="all.php" role="button">Tous les tickets</a>
-	<form><select class="btn btn-secondary" role="button" name="creer">
-    <option class="btn btn-primary" role="button">Creer</button>
-    <option class="btn btn-primary" role="button">Utilisateur</option>
-    <option class="btn btn-primary" role="button">Client</option>
-    <option class="btn btn-primary" role="button">Logiciel</option></select>
+	<a class="btn btn-primary" href="all_ticket.php" role="button">Tous les tickets</a>
 	<br><br>
 	<?php
 	/* Connexion à la base de donnée */
@@ -27,7 +22,7 @@
 	if(isset($res)) {
 		foreach ($res as $logiciel) {
 			?>
-			<h2><a href=projet.php?client=<?php echo $logiciel['CLI_ID'];?>>Client <?php echo $logiciel["CLI_Nom"];?></a></h2>
+			<h2><a href=fiche.php?client=<?php echo $logiciel['CLI_ID'];?>>Client <?php echo $logiciel["CLI_Nom"];?></a></h2>
   <?php
   			}
 				echo "</div>";

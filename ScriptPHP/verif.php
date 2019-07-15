@@ -5,6 +5,6 @@ if (!isset($_SESSION['login'])) {
 	if (isset($_GET['client'])) {
 		$_SESSION['client'] = $_GET['client'];
 	}
-	header('Location: ../index.php');
+	header('Location: ./index.php');
 }
 ?>

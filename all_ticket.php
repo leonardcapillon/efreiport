@@ -7,12 +7,13 @@
 </head>
 <body class="container" align="center">
 	<h1>EFREIPORT | Outil de ticketing Efreiport Web | Tous les tickets
-    <br>Interface Admin	<a href="ScriptPHP/logout.php" class="deco"><img class="imgdeco" src="img/button.png" title="Déconnexion" alt="Déconnexion"></a>
+    <br>Interface Admin	<a href="ScriptPHP/logout.php" class="deco"><img  style="width:50px;height:50px;" class="imgdeco" src="img/button.png" title="Déconnexion" alt="Déconnexion"></a>
   </h1>
   <br>
-  <a class="btn btn-primary" href="index_adm.php" role="button">Retour à l'accueil</a>
+  <a class="btn btn-primary" href="accueil.php" role="button">Retour à l'accueil</a>
+  <a class="btn btn-primary" href="new_ticket.php" role="button">Créer un nouveau Ticket</a>
   <button class="btn btn-secondary" onClick="checkAll('cases[]', true);">Sélectionner tout</button>
-  <button class="btn btn-secondary" href="all_adm.php" onClick="checkNorris('cases[]', true);">Ne rien sélectionner</button>
+  <button class="btn btn-secondary" onClick="checkNorris('cases[]', true);">Ne rien sélectionner</button>
   <br><br>
 
   <?php
@@ -20,7 +21,7 @@
   include('co.php');
 
   /* Execution de la requête dans QRcode_History afin de récuperer l'historique */
-  $res = $link->query("select id, date, salle, type, pc, description from Ticket");
+  $res = $link->query("select Ticket.TCK_ID, Client.CLI_ID, Client.CLI_NOM, Ticket.TCK_TITRE from Ticket join Client on (TCK_CLI_ID=CLI_ID)");
 
   /* Definition du tableau en fonction du resultat obtenu lors de la requete précedente */
   if(isset($res)) {
@@ -28,21 +29,15 @@
     echo "<table class=\"table\">";
     echo "<tr>
     <th>ID du ticket</th>
-    <th>Date</th>
-    <th>Salle</th>
-    <th>Type de problème</th>
-    <th>Numéro du poste</th>
-    <th>Description</th>
+    <th>Nom du Client</th>
+    <th>Nom du ticket</th>
     <th><input type='submit' class=\"btn btn-danger\" value='Supprimer la selection'></th>
     </tr>";
-    while($notif=mysqli_fetch_assoc($res)){
-      echo "<tr><td>".$notif['id']."</td>".
-      "<td>".$notif['date']."</td>".
-      "<td><a href=\"notif_adm.php?salle=".$notif['salle']."\">".ucfirst($notif['salle'])."</a></td>".
-      "<td>".ucfirst($notif['type']).
-      "<td>".ucfirst($notif['pc'])."</td>".
-      "<td>".$notif['description']."</td>".
-      "<td><input type='checkbox' name='todelete[]' value='".$notif['id']."''></td>".
+    while($cli=$res->fetch()){
+      echo "<tr><td>".$cli['TCK_ID']."</td>".
+      "<td><a href=\"fiche.php?client=".$cli['CLI_ID']."\">".ucfirst($cli['CLI_NOM'])."</a></td>".
+      "<td>".ucfirst($cli['TCK_TITRE']).
+      "<td><input type='checkbox' name='todelete[]' value='".$cli['TCK_ID']."''></td>".
       "</tr>";
     }
     echo "</table>";

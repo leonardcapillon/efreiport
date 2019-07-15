@@ -1,3 +1,4 @@
+<?php include('./ScriptPHP/verif.php'); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

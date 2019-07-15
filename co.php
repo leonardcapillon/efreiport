@@ -1,6 +1,6 @@
 <?php
-$link=mysqli_connect("127.0.0.1","root","leonard","efreiport");
-mysqli_set_charset($link, "utf8");
+$link=new PDO('mysql:host=localhost;dbname=efreiport', 'root', 'leonard');
+$link->exec('SET NAMES utf8');
 if(!$link){
   die("<p>connexion impossible</p>");
 }

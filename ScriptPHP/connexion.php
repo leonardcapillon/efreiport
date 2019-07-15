@@ -1,10 +1,12 @@
 <?php
 include('../co.php');
-$log = $link->real_escape_string ($_POST['login']);
-$mdp = $link->real_escape_string ($_POST['mdp']);
+$log = $_POST['login'];
+$mdp = $_POST['mdp'];
+
 // Vérification des identifiants
-$resultat = $link->query("SELECT user_mdp FROM Utilisateur WHERE user_login = '$log'");
-$pass = $resultat->fetch_assoc();
+$resultat = $link->prepare("SELECT user_mdp FROM Utilisateur WHERE user_login = ?");
+$resultat->execute([$log]);
+$pass = $resultat->fetch();
 
 if (password_verify($mdp,$pass['user_mdp']))
 {
@@ -18,7 +20,7 @@ if (password_verify($mdp,$pass['user_mdp']))
     unset($_SESSION['salle']);
   }
   else {
-    header('Location: ../index_adm.php');
+    header('Location: ../accueil.php');
   }
 
 } else {
