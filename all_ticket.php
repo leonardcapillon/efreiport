@@ -25,7 +25,7 @@
 
   /* Definition du tableau en fonction du resultat obtenu lors de la requete précedente */
   if(isset($res)) {
-    echo "<form action='./ScriptPHP/TicketDelete.php' method='post'>";
+    echo "<form action='./ScriptPHP/del_ticket.php' method='post'>";
     echo "<table class=\"table\">";
     echo "<tr>
     <th>ID du ticket</th>
@@ -36,7 +36,7 @@
     while($cli=$res->fetch()){
       echo "<tr><td>".$cli['TCK_ID']."</td>".
       "<td><a href=\"fiche.php?client=".$cli['CLI_ID']."\">".ucfirst($cli['CLI_NOM'])."</a></td>".
-      "<td>".ucfirst($cli['TCK_TITRE']).
+      "<td><a href=\"mod_ticket.php?ticket=".$cli['TCK_ID']."\">".ucfirst($cli['TCK_TITRE']).
       "<td><input type='checkbox' name='todelete[]' value='".$cli['TCK_ID']."''></td>".
       "</tr>";
     }
