@@ -53,7 +53,7 @@ if (isset($_GET['client'])) {
       </div>
 
       <br>
-      <input class="btn btn-danger" name="submit" type="submit" value="Créer l'utilisateur">
+      <input class="btn btn-danger" name="submit" type="submit" value="Créer le projet">
 <br><br>
 
 <?php } ?>

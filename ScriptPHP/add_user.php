@@ -17,9 +17,9 @@ $sql = "INSERT INTO Utilisateur (USER_NOM, USER_PRENOM, USER_LOGIN, USER_MDP, US
           $stmt= $link->prepare($sql);
           try {
 		  $stmt->execute([$_POST['nom'], $_POST['prenom'], $_POST['login'], password_hash($_POST['pass'], PASSWORD_BCRYPT), $_POST['email'], $_POST['numero']]);
-            echo "<br>Le client a bien été ajouté<br><br>";
+            echo "<br>L'utilisateur a bien été ajouté<br><br>";
         	} catch (Exception $e) {
-        		echo "<br>Il y a eu un problème lors de la création du client, merci de réessayer.";
+        		echo "<br>Il y a eu un problème lors de la création de l'utilisateur, merci de réessayer.";
             echo "<a class=\"btn btn-primary\" href=\"add_user.php\" role=\"butto\">Retour</a>";}
 ?>
 

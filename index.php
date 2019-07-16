@@ -6,7 +6,7 @@
 </head>
 <body class="container" align="center">
 	<h1>EFREIPORT | Outil de ticketing Efreiport Web
-	<br>Connexion à l'interface Admin
+	<br>Connexion
 	</h1>
 	<br>
 

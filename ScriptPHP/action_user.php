@@ -31,7 +31,6 @@ if($trouve==false ) {
   } else {
     try {
             if ($_POST['pass']=='') {
-              echo $_POST['numero'];
               $sql = "UPDATE Utilisateur set USER_NOM=?, USER_PRENOM=?, USER_LOGIN=?, USER_EMAIL=?, USER_ROLE=? where USER_ID = ?;)";
               $stmt= $link->prepare($sql);
               $stmt->execute([$_POST['nom'], $_POST['prenom'], $_POST['login'], $_POST['email'], $_POST['numero'], $usrid]);
@@ -40,9 +39,9 @@ if($trouve==false ) {
                         $stmt= $link->prepare($sql);
                         $stmt->execute([$_POST['nom'], $_POST['prenom'], $_POST['login'], password_hash($_POST['pass'], PASSWORD_BCRYPT), $_POST['email'], $_POST['numero'], $usrid]);
             }
-            echo "<br>Le client a bien été modifié<br><br>";
+            echo "<br>L'utilisateur a bien été modifié<br><br>";
         	} catch (Exception $e) {
-        		echo "<br>Il y a eu un problème lors de la modification du client, merci de réessayer.";
+        		echo "<br>Il y a eu un problème lors de la modification de l'utilisateur, merci de réessayer.";
             echo "<a class=\"btn btn-primary\" href=\"add_user.php\" role=\"butto\">Retour</a>";
           }
         }

@@ -72,18 +72,20 @@ if (isset($_GET['client'])) {
 
     /* Definition du tableau en fonction du resultat obtenu lors de la requete précedente */
     if(isset($res2)) {
-      echo "<table class=\"table\">";
+      echo "<table class=\"table table-striped table-hover\">";
+      echo "<thead>";
       echo "<tr>
-      <th>ID du ticket</th>
-      <th>Date</th>
-      <th>Titre</th>
-      <th>Statut</th>
-      <th>Commentaire</th>
-      </tr>";
-      foreach ($res2 as $notif) {
+      <th scope=\"col\">ID du ticket</th>
+      <th scope=\"col\">Date</th>
+      <th scope=\"col\">Titre</th>
+      <th scope=\"col\">Statut</th>
+      <th scope=\"col\">Commentaire</th>
+      </tr></thead>
+      <tbody>";
+      while($notif=$res2->fetch()) {
         $tab=$notif;
-
-        echo "<td>".$notif['TCK_ID']."</td>".
+        echo "<tr id='scen' onclick='DoNav(\"fiche_ticket.php?ticket=".$notif['TCK_ID']."\")'>
+        <td>".$notif['TCK_ID']."</td>".
         "<td>".ucfirst($notif['STA_USR_DATETIME'])."</td>".
         "<td>".ucfirst($notif['TCK_TITRE']).
         "<td>".ucfirst($notif['STA_STATUT'])."</td>".

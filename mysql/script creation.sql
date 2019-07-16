@@ -17,9 +17,9 @@ INSERT INTO Projet (PRJ_NOM,`PRJ_CLI_ID`) VALUES  ("Steam","1");
 INSERT INTO Projet (PRJ_NOM,`PRJ_CLI_ID`) VALUES  ("Steam","3");
 INSERT INTO Projet (PRJ_NOM,`PRJ_CLI_ID`) VALUES  ("EpicGames","2");
 
-INSERT INTO Ticket (TCK_CLI_ID) VALUES  ("1");
-INSERT INTO Ticket (TCK_CLI_ID) VALUES  ("2");
-INSERT INTO Ticket (TCK_CLI_ID) VALUES  ("3");
+INSERT INTO Ticket (TCK_CLI_ID, TCK_TITRE, TCK_DESC) VALUES  ("1","Probleme reseau","Souci");
+INSERT INTO Ticket (TCK_CLI_ID, TCK_TITRE, TCK_DESC) VALUES  ("2","Ordi demarre pas","Probleme d'alim");
+INSERT INTO Ticket (TCK_CLI_ID, TCK_TITRE, TCK_DESC) VALUES  ("1","Prise malfonction","Electric");
 
 
 INSERT INTO Etat (STA_TCK_ID,`STA_USR_ID`,`STA_COM`,`STA_STATUT`) VALUES  ("1","2","KAPOUT","Démarée");

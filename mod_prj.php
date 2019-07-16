@@ -48,7 +48,7 @@ if (isset($_GET['client'])) {
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">Nom du projet*</span>
         </div>
-        <input type="text" class="form-control" name="nom" value=<?php echo $nomproj;?> required>
+        <input type="text" class="form-control" name="nom" value="<?php echo $nomproj;?>" required>
       </div>
       <div class="input-group mb-3">
         <div class="input-group-prepend">

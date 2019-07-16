@@ -11,9 +11,7 @@
   </h1>
   <br><br>
   <a class="btn btn-primary" href="accueil.php" role="button">Retour à l'accueil</a>
-  <a class="btn btn-primary" href="new_ticket.php" role="button">Créer un nouveau Ticket</a>
-  <button class="btn btn-secondary" onClick="checkAll('cases[]', true);">Sélectionner tout</button>
-  <button class="btn btn-secondary" onClick="checkNorris('cases[]', true);">Ne rien sélectionner</button>
+  <a class="btn btn-secondary" href="new_ticket.php" role="button">Créer un nouveau Ticket</a>
   <br><br>
 
   <?php
@@ -25,51 +23,31 @@
 
   /* Definition du tableau en fonction du resultat obtenu lors de la requete précedente */
   if(isset($res)) {
-    echo "<form action='./ScriptPHP/del_ticket.php' method='post'>";
-    echo "<table class=\"table\">";
+    echo "<table class=\"table table-striped table-hover\">";
+    echo "<thead>";
     echo "<tr>
-    <th>ID du ticket</th>
-    <th>Nom du Client</th>
-    <th>Nom du ticket</th>
-    <th><input type='submit' class=\"btn btn-danger\" value='Supprimer la selection'></th>
-    </tr>";
+    <th scope=\"col\">ID du ticket</th>
+    <th scope=\"col\">Nom du Client</th>
+    <th scope=\"col\">Nom du ticket</th>
+    </tr>
+    </thead>
+    <tbody>";
     while($cli=$res->fetch()){
-      echo "<tr><td>".$cli['TCK_ID']."</td>".
+      echo "<tr id='scen' onclick='DoNav(\"fiche_ticket.php?ticket=".$cli['TCK_ID']."\")'>
+      <td>".$cli['TCK_ID']."</td>".
       "<td><a href=\"fiche.php?client=".$cli['CLI_ID']."\">".ucfirst($cli['CLI_NOM'])."</a></td>".
-      "<td><a href=\"mod_ticket.php?ticket=".$cli['TCK_ID']."\">".ucfirst($cli['TCK_TITRE']).
-      "<td><input type='checkbox' name='todelete[]' value='".$cli['TCK_ID']."''></td>".
+      "<td><a href=\"fiche_ticket.php?ticket=".$cli['TCK_ID']."\">".ucfirst($cli['TCK_TITRE']).
       "</tr>";
     }
-    echo "</table>";
+    echo "</tbody></table>";
   } else
   echo "erreur";
   ?>
   <script>
 
-  window.onload = checkNorris('cases[]', 'true');
-
-  function checkAll(name, checked){
-    //On parcourt tous les inputs de la page
-    var inputs = document.getElementsByTagName('input');
-    for(var i=0; i<inputs.length; i++){
-      //On regarde s'il s'agit d'une checkbox avec le nom souhaité
-      if(inputs[i].type == 'checkbox' && inputs[i].name == 'todelete[]'){
-        //On attribue à la case le même état (coché/décoché) que celui de la checkbox servant à tout cocher/décocher
-        inputs[i].checked = checked;
-      }
-    }
-  }
-  function checkNorris(name, checked){
-    //On parcourt tous les inputs de la page
-    var inputs = document.getElementsByTagName('input');
-    for(var i=0; i<inputs.length; i++){
-      //On regarde s'il s'agit d'une checkbox avec le nom souhaité
-      if(inputs[i].type == 'checkbox' && inputs[i].name == 'todelete[]'){
-        //On attribue à la case le même état (coché/décoché) que celui de la checkbox servant à tout cocher/décocher
-        inputs[i].checked = !checked;
-      }
-    }
-  }
   </script>
 </body>
 </html>
+<script>
+function DoNav(theUrl) { document.location.href = theUrl; }
+</script>

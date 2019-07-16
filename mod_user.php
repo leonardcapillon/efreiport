@@ -82,7 +82,7 @@ if (isset($_SESSION['id'])) {
         </select>
       </div>
       <br>
-      <input class="btn btn-danger" name="submit" type="submit" value="Créer l'utilisateur">
+      <input class="btn btn-danger" name="submit" type="submit" value="Modifier l'utilisateur">
 <br><br><?php }} ?>
 </body>
 </html>

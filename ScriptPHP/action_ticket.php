@@ -15,32 +15,31 @@ include('../co.php');
   <?php
           /* Vérification que l'argument existe */
           $trouve=false;
-          $res = $link->query('select * from Etat');
-          if (isset($_GET['statut'])) {
-            $statckid = $_GET['statut'];
+          $res = $link->query('select * from Ticket');
+          if (isset($_GET['ticket'])) {
+            $tckid = $_GET['ticket'];
             while ($row = $res->fetch()) {
-              if ($row['STA_TCK_ID']==$statckid) {
+              if ($row['TCK_ID']==$tckid) {
                 $trouve=true;
-                $user=$row['STA_TCK_ID'];
               }
             }
           }
 	?>
-  
+
   <?php
-  $sql = "INSERT INTO Etat SET STA_STA=?, STA_COM=?,STA_USR_DATETIME=?  WHERE STA_TCK_ID=?";
+  $sql = "INSERT INTO Etat (STA_TCK_ID, STA_USR_ID, STA_COM, STA_STATUT) values (?,?,?,?)";
           $stmt= $link->prepare($sql);
           try {
-		  $stmt->execute([$_POST['statut'], $_POST['commentaire'], $_POST[date],$statckid]);
+		  $stmt->execute([$tckid, $_SESSION['id'],$_POST['comment'],$_POST['statut']]);
             echo "<br>Le ticket a bien été modifié<br><br>";
         	} catch (Exception $e) {
         		echo "<br>Il y a eu un problème lors de la modification du ticket, merci de réessayer.";
             echo "<a class=\"btn btn-primary\" href=\"../mod_ticket.php?client=$tck\" role=\"butto\">Retour</a>";
           }
 	?>
-	
+
   <br>
-  <a class="btn btn-primary" href="../all_ticket.php" role="button">Retour aux Tickets</a><br><br>		
-  
+  <a class="btn btn-primary" href="../all_ticket.php" role="button">Retour aux Tickets</a><br><br>
+
 </body>
 </html>

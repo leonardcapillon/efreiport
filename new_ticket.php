@@ -11,6 +11,7 @@ if (isset($_GET['client'])) {
   foreach ($res as $client) {
     if ($client['CLI_ID']==$_GET['client']) {
       $nomcli=$client['CLI_NOM'];
+      $clid=$_GET['client'];
       $trouve=true;
     }
   }
@@ -23,7 +24,7 @@ if (isset($_GET['client'])) {
   </head>
 <body class="container" align="center">
 	<h1>EFREIPORT | Création du ticket </h1>
-  <br>
+  <br><a class="btn btn-primary" href="all_ticket.php" role="button">Retour aux Tickets</a><br><br>
     <form method="post" name="formulaire" action="ScriptPHP/add_ticket.php">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -41,8 +42,11 @@ if (isset($_GET['client'])) {
         <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Client*</label>
 		</div>
+    <?php if (isset($clid)) { ?>
+      <input type="text" class="form-control" name="client" value=<?php echo $nomcli; ?> required disabled>
+    <?php } else { ?>
 		<select name="client" class="custom-select" id="CLI_ID" required>
-			<option selected>Choose...</option>
+      <option selected>Choose...</option>
 				<?php
 					$res = $link->query("select CLI_NOM, CLI_ID from Client");
 					if(isset($res)) {
@@ -53,6 +57,7 @@ if (isset($_GET['client'])) {
 						echo "erreur";
 				?>
 		</select>
+  <?php } ?>
 	  </div>
       <div class="input-group mb-3">
 	  <div class="input-group-prepend">
@@ -60,7 +65,7 @@ if (isset($_GET['client'])) {
   </div>
 		<select name="statut" class="custom-select" id="statut" required>
 			<option selected>Choose...</option>
-      <option value="Demarré">Demarre</option>
+      <option value="Demarré">Demarré</option>
       <option value="En cours">En cours</option>
       <option value="Cloturé">Cloturé</option>
 		</select>
@@ -73,7 +78,6 @@ if (isset($_GET['client'])) {
     </div>
       <br>
       <input class="btn btn-danger" name="submit" type="submit" value="Créer le Ticket">
-	  <a class="btn btn-primary" href="all_ticket.php" role="button">Retour aux Tickets</a><br><br>
 <br><br>
 </body>
 </html>

@@ -11,10 +11,10 @@ include('../co.php');
 <html lang="fr">
 <head>
   <?php include('../head.php'); ?>
-	<title>EFREIPORT Web | Suppression de ticket(s) </title>
+	<title>EFREIPORT Web | Suppression de projet </title>
   </head>
 <body class="container" align="center">
-	<h1>EFREIPORT | Suppression de ticket(s)</h1>
+	<h1>EFREIPORT | Suppression de projet</h1>
   <br>
   <a class="btn btn-primary" href="../accueil.php" role="button">Retour à l'accueil</a><br><br>
   <?php
