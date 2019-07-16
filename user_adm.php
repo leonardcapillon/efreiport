@@ -4,18 +4,15 @@
 /* Connexion à la base de donnée */
 include('co.php');
 
-/* Vérification que l'argument existe */
+/* Vérification que l'id est Administrateur */
 $trouve=false;
-$res = $link->query("select * from Utilisateur where USER_ID == ".$_SESSION['id']);
-
 if (isset($_SESSION['id'])) {
-  foreach ($res as $user) {
+  $res = $link->query("select * from Utilisateur where USER_ID = ".$_SESSION['id']);
+  $user=$res->fetch();
     if ($user['USER_ROLE']==0) {
       $usr=$user['USER_LOGIN'];
-      echo $usr."<br>";
       $trouve=true;
     }
-  }
 }
 ?>
 <html lang="fr">
@@ -25,83 +22,69 @@ if (isset($_SESSION['id'])) {
   </head>
 <body class="container" align="center">
 	<h1>EFREIPORT | Gestion des utilisateurs</h1>
-  <br>
-  <?php echo $_SESSION['id'];?>
+  <br><a href="ScriptPHP/logout.php" class="deco"><img class="imgdeco" src="img/button.png" title="Déconnexion" alt="Déconnexion"></a><br>
   <a class="btn btn-primary" href="accueil.php" role="button">Retour à l'accueil</a>
-  <br><br>
   <?php
 
   if($trouve==false ) {
     echo "<br><br>";
-    echo "<p>Merci de choisir un client sur l'écran d'accueil</p>";
+    echo "<p>Vous n'avez pas le droit d'etre ici..... Reessayer en admin.</p>";
 
   } else {
-
-    $cli=$_GET['client'];
-    echo "<a class=\"btn btn-primary\" href=\"new_prj.php?client=$cli\" role=\"button\">Ajouter un projet</a>&nbsp;";
-    echo "<a class=\"btn btn-info\" href=\"new_ticket.php?client=".$cli."\" role=\"button\">Nouveau ticket</a>";
-    echo "<br><br><h2>Projets du client</h2>";
-    /* Mise en place de la requête en fontion des arguments reçus et exécution */
-    $res2 = $link->query("select prj_id, PRJ_NOM,PRJ_CLI_ID from Projet where PRJ_CLI_ID='".$cli."';");
-
+    $res = $link->query('select * from Utilisateur');
+    echo "<a class=\"btn btn-primary\" href=\"new_user.php\" role=\"button\">Ajouter un utilisateur</a><br><br>";
     /* Definition du tableau en fonction du resultat obtenu lors de la requete précedente */
-    if(isset($res2)) {
-      echo "<form action='./ScriptPHP/del_prj.php' method='post'>";
-      echo "<table class=\"table\">";
-      echo "<table class=\"table table-striped table-hover\">";
-      echo "<thead>";
-      echo "<tr>
-      <th scope=\"col\">ID du projet</th>
-      <th scope=\"col\">Nom du projet</th>
-      <th scope=\"col\" id=\"sup\"><input type='submit' class=\"btn btn-danger\" value='Supprimer la selection'></th>
-      </tr>
+    if(isset($res)) {
+      echo "Vous pouvez cliquer n'importe ou sur le tableau pour acceder a la modification de l'utilisateur.<br>
+      /!\ Attention ! Supprimer un utilisateur supprimera les interractions qu'il a eu avec des tickets (etat)<br><br>";
+	     echo "<table class=\"table table-striped table-hover\">";
+      echo "<thead>
+      <tr>
+      <th scope=\"col\">ID</th>
+      <th scope=\"col\">Nom</th>
+      <th scope=\"col\">Prénom</th>
+      <th scope=\"col\">Login</th>
+      <th scope=\"col\">Mail</th>
+      <th scope=\"col\">Role</th>
+      <th scope=\"col\">Supression</th>
+	  </tr>
       <thead>
       <tbody>";
-      foreach ($res2 as $prj) {
-        echo "<tr id=\"scen\">
-        <td onclick='DoNav(\"mod_prj.php?client=".$cli."&num=".$prj['prj_id']."\")'>".$prj['prj_id']."</td>
-        <td onclick='DoNav(\"mod_prj.php?client=".$cli."&num=".$prj['prj_id']."\")'>".ucfirst($prj['PRJ_NOM'])."</td>
-        <td><input type='checkbox' name='todelete[]' value='".$prj['prj_id']."''></td>
-        </tr>";
+      while($user=$res->fetch()){
+		echo "<tr id=\"scen\">
+      <td onclick='DoNav(\"mod_user.php?num=".$user['USER_ID']."\")'>".$user['USER_ID']."</td>".
+        "<td onclick='DoNav(\"mod_user.php?num=".$user['USER_ID']."\")'>".ucfirst($user['USER_NOM'])."</a></td>".
+        "<td onclick='DoNav(\"mod_user.php?num=".$user['USER_ID']."\")'>".ucfirst($user['USER_PRENOM'])."</td>".
+		    "<td onclick='DoNav(\"mod_user.php?num=".$user['USER_ID']."\")'>".ucfirst($user['USER_LOGIN'])."</td>".
+        "<td onclick='DoNav(\"mod_user.php?num=".$user['USER_ID']."\")'>".ucfirst($user['USER_EMAIL'])."</td>";
+
+        switch ($user['USER_ROLE']) {
+          case 0:
+            echo "<td onclick='DoNav(\"mod_user.php?num=".$user['USER_ID']."\")'>Administrateur</td>";
+            break;
+
+          case 1:
+            echo "<td onclick='DoNav(\"mod_user.php?num=".$user['USER_ID']."\")'>Reporteur</td>";
+            break;
+
+          case 2:
+            echo "<td onclick='DoNav(\"mod_user.php?num=".$user['USER_ID']."\")'>Developpeur</td>";
+            break;
+
+          default:
+            echo "<td onclick='DoNav(\"mod_user.php?num=".$user['USER_ID']."\")'>".ucfirst($user['USER_ID'])."</td>";
+            break;
+        }
+
+        echo "<td class=\"btn btn-danger\" onclick='DoNav(\"ScriptPHP/del_user.php?num=".$user['USER_ID']."\")'>Supprimer utilisateur</td>".
+		  "</tr>";
+
       }
       echo "</tbody></table>";
-      echo "</form>";
-
-      echo "<br><br><h2>Tickets du client</h2>";
-      $res2 = $link->query("SELECT t.TCK_ID, t.TCK_TITRE, a.STA_USR_DATETIME, a.STA_COM, a.STA_STATUT FROM Etat a JOIN ( SELECT STA_TCK_ID,MAX(STA_USR_DATETIME) as STA_USR_DATETIME FROM Etat group by STA_TCK_ID ) b on (a.STA_USR_DATETIME = b.STA_USR_DATETIME) AND (a.STA_TCK_ID = b.STA_TCK_ID) JOIN Ticket t on t.TCK_ID = a.STA_TCK_ID JOIN Client c on c.CLI_ID = t.TCK_CLI_ID WHERE c.CLI_ID ='".$cli."';");
-
-    /* Definition du tableau en fonction du resultat obtenu lors de la requete précedente */
-    if(isset($res2)) {
-      echo "<table class=\"table\">";
-      echo "<tr>
-      <th>ID du ticket</th>
-      <th>Date</th>
-      <th>Titre</th>
-      <th>Statut</th>
-      <th>Commentaire</th>
-      </tr>";
-      foreach ($res2 as $notif) {
-        $tab=$notif;
-
-        echo "<td>".$notif['TCK_ID']."</td>".
-        "<td>".ucfirst($notif['STA_USR_DATETIME'])."</td>".
-        "<td>".ucfirst($notif['TCK_TITRE']).
-        "<td>".ucfirst($notif['STA_STATUT'])."</td>".
-        "<td>".ucfirst($notif['STA_COM'])."</td>".
-        "</tr>";
-      }
-      echo "</table>";
-    } else {
-      echo "Erreur d'accès à la base de donnée";
-
-    }
-  } else {
-      echo "Erreur d'accès à la base de donnée";
-
-    }
-  }
-  ?>
-
+    } else
+    echo "erreur";
+}
+    ?>
 </body>
 </html>
 <script type="text/javascript">

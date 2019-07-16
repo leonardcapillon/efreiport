@@ -24,6 +24,7 @@ if (isset($_GET['client'])) {
   </head>
 <body class="container" align="center">
 	<h1>EFREIPORT | Fiche du client <?php if ($trouve==true) { echo $nomcli; }?></h1>
+  <br><a href="ScriptPHP/logout.php" class="deco"><img class="imgdeco" src="img/button.png" title="Déconnexion" alt="Déconnexion"></a>
   <br>
   <a class="btn btn-primary" href="accueil.php" role="button">Retour à l'accueil</a>
   <button class="btn btn-secondary" onClick="checkAll('cases[]', true);">Sélectionner tout</button>
@@ -47,7 +48,6 @@ if (isset($_GET['client'])) {
     /* Definition du tableau en fonction du resultat obtenu lors de la requete précedente */
     if(isset($res2)) {
       echo "<form action='./ScriptPHP/del_prj.php' method='post'>";
-      echo "<table class=\"table\">";
       echo "<table class=\"table table-striped table-hover\">";
       echo "<thead>";
       echo "<tr>

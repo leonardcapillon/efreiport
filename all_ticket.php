@@ -7,9 +7,9 @@
 </head>
 <body class="container" align="center">
 	<h1>EFREIPORT | Outil de ticketing Efreiport Web | Tous les tickets
-    <br>Interface Admin	<a href="ScriptPHP/logout.php" class="deco"><img  style="width:50px;height:50px;" class="imgdeco" src="img/button.png" title="Déconnexion" alt="Déconnexion"></a>
+    <br><a href="ScriptPHP/logout.php" class="deco"><img class="imgdeco" src="img/button.png" title="Déconnexion" alt="Déconnexion"></a>
   </h1>
-  <br>
+  <br><br>
   <a class="btn btn-primary" href="accueil.php" role="button">Retour à l'accueil</a>
   <a class="btn btn-primary" href="new_ticket.php" role="button">Créer un nouveau Ticket</a>
   <button class="btn btn-secondary" onClick="checkAll('cases[]', true);">Sélectionner tout</button>

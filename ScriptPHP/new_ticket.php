@@ -36,7 +36,7 @@ if (isset($_GET['client'])) {
           <span class="input-group-text" id="basic-addon1">Description du Ticket*</span>
         </div>
         <input type="text" class="form-control" name="desc" required>
-      </div>
+      </div>	  
 	  <div class="input-group mb-3">
         <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Client*</label>
@@ -55,22 +55,26 @@ if (isset($_GET['client'])) {
 		</select>
 	  </div>
       <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Commentaire*</span>
+        </div>
+        <input type="text" class="form-control" name="comentaire" required>
+      </div>	 
 	  <div class="input-group-prepend">
 		<label class="input-group-text" for="inputGroupSelect01">Statut*</label>
-  </div>
 		<select name="statut" class="custom-select" id="statut" required>
 			<option selected>Choose...</option>
-      <option value="Demarré">Demarre</option>
-      <option value="En cours">En cours</option>
-      <option value="Cloturé">Cloturé</option>
+				<?php
+					$res = $link->query("select  DISTINCT STA_STATUT from Etat");
+					if(isset($res)) {
+						while($message=$res->fetch()){
+							echo "<option value=\"".ucfirst($message[0])."\">".ucfirst($message[0])."</option>";
+							}
+						} else
+						echo "erreur";
+				?>
 		</select>
 		</div>
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">Commentaire*</span>
-      </div>
-      <input type="text" class="form-control" name="comentaire" required>
-    </div>
       <br>
       <input class="btn btn-danger" name="submit" type="submit" value="Créer le Ticket">
 	  <a class="btn btn-primary" href="all_ticket.php" role="button">Retour aux Tickets</a><br><br>

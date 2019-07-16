@@ -15,24 +15,23 @@ include('../co.php');
   <?php
           /* Vérification que l'argument existe */
           $trouve=false;
-          $res = $link->query('select * from Ticket');
-          if (isset($_GET['ticket'])) {
-            $tckid = $_GET['ticket'];
-            //$res = $dbs->query('select * from utilisateur');
+          $res = $link->query('select * from Etat');
+          if (isset($_GET['statut'])) {
+            $statckid = $_GET['statut'];
             while ($row = $res->fetch()) {
-              if ($row['TCK_ID']==$tckid) {
+              if ($row['STA_TCK_ID']==$statckid) {
                 $trouve=true;
-                $user=$row['TCK_TITRE'];
+                $user=$row['STA_TCK_ID'];
               }
             }
           }
 	?>
   
   <?php
-  $sql = "UPDATE Ticket SET TCK_TITRE=?, TCK_DESC=?  WHERE TCK_ID=?";
+  $sql = "INSERT INTO Etat SET STA_STA=?, STA_COM=?,STA_USR_DATETIME=?  WHERE STA_TCK_ID=?";
           $stmt= $link->prepare($sql);
           try {
-		  $stmt->execute([$_POST['titre'], $_POST['desc'],$tckid]);
+		  $stmt->execute([$_POST['statut'], $_POST['commentaire'], $_POST[date],$statckid]);
             echo "<br>Le ticket a bien été modifié<br><br>";
         	} catch (Exception $e) {
         		echo "<br>Il y a eu un problème lors de la modification du ticket, merci de réessayer.";

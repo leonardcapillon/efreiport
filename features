@@ -1,15 +1,28 @@
-Dev
+FAIT :
+{Dev
 - consulter et modifier les tickets
 
 Rapporteur
 - creer, modifier et supprimer un client
 - creer modifier et clore les tickets, projets
 
+}
+
+A FAIRE :
+{
+GESTION DES CLIENTS
 
 Admin
 - peut faire tout comme les autres
 - gestion utlisateurs
 
+
+FAIRE L'HISTORISATION DES ETATS
+
+DOCUMENTS
+UML
+METTRE LA DECONNEXION PARTOUT
+}
 
 SI ON A LE TEMPS :
 - STATS
